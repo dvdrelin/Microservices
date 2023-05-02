@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using System.Net;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Events;
@@ -16,7 +17,7 @@ public class OrderController : ControllerBase
     private readonly IHttpClientFactory _httpClientFactory;
 
     public OrderController(
-        IOrderService orderService, 
+        IOrderService orderService,
         IPublishEndpoint publishEndpoint,
         IHttpClientFactory httpClientFactory)
 
@@ -45,13 +46,22 @@ public class OrderController : ControllerBase
             {
                 return NotFound($"Product with ID={order.ProductId} not found!");
             }
+
             _orderService.Add(order);
             await _publishEndpoint.Publish(new OrderCreateEvent(order));
             return Ok();
         }
-        catch (HttpRequestException httpRequestException)
+        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode == HttpStatusCode.BadGateway)
         {
-            return BadRequest($"Fetching the product with ID={order.ProductId} failed!\r\n{httpRequestException}");
+            return NotFound($"Fetching the product with ID={order.ProductId} failed! Remote service is unreachable!");
+        }
+        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode == HttpStatusCode.NotFound)
+        {
+            return NotFound($"Fetching product failed: {httpRequestException.Message}");
+        }
+        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode is null)
+        {
+            return BadRequest($"Could not get a response! \r\n{httpRequestException}");
         }
     }
 
