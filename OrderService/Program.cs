@@ -25,7 +25,7 @@ builder.Services.AddMassTransit(config =>
 });
 builder.Services.AddHttpClient("product", httpClient =>
 {
-    httpClient.BaseAddress = new Uri("http://localhost:7205");
+    httpClient.BaseAddress = new Uri("https://localhost:7205");
 });
 
 var app = builder.Build();
