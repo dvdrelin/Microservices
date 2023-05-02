@@ -20,7 +20,14 @@ public class ProductController : ControllerBase
 
     [HttpGet] public IEnumerable<Product> Get() => _productService.Get();
 
-    [HttpGet("{id}")] public Product? Get(int id) => _productService.Get().FirstOrDefault(x=>x.Id == id);
+    [HttpGet("{id}")] public IActionResult Get(int id)
+    {
+        var product = _productService.Get().FirstOrDefault(x => x.Id == id);
+
+        return product is null
+            ? NotFound($"Product width ID={id} not found!")
+            : Ok(product);
+    }
 
     [HttpPost] public async Task Post([FromBody] Product product)
     {
