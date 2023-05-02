@@ -23,6 +23,10 @@ builder.Services.AddMassTransit(config =>
         cfg.ReceiveEndpoint("inventory-failed-queue", endpoint => endpoint.ConfigureConsumer<OrderFailedOnInventoryEventConsumer>(ctx));
     });
 });
+builder.Services.AddHttpClient("product", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("http://localhost:7205");
+});
 
 var app = builder.Build();
 
