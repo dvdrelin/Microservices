@@ -1,6 +1,7 @@
 
 using MassTransit;
 using OrderService;
+using OrderService.EventConsumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMassTransit(config =>
 {
+    config.AddConsumer<OrderSuccessfulOnInventoryEventConsumer>();
+    config.AddConsumer<OrderFailedOnInventoryEventConsumer>();
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host("amqp://guest:guest@localhost:5672");
+        cfg.ReceiveEndpoint("inventory-successful-queue", endpoint => endpoint.ConfigureConsumer<OrderSuccessfulOnInventoryEventConsumer>(ctx));
+        cfg.ReceiveEndpoint("inventory-failed-queue", endpoint => endpoint.ConfigureConsumer<OrderFailedOnInventoryEventConsumer>(ctx));
     });
 });
 

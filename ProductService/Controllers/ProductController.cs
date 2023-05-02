@@ -25,7 +25,7 @@ public class ProductController : ControllerBase
     [HttpPost] public async Task Post([FromBody] Product product)
     {
         _productService.Add(product);
-        await _publishEndpoint.Publish(product);
+        await _publishEndpoint.Publish(new ProductCreateEvent(product));
     }
 
     [HttpPut("{id}")] public void Put(int id, [FromBody] Product product) => _productService.Update(id, product);

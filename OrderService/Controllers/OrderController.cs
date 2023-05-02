@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using Model.Events;
 
 namespace OrderService.Controllers;
 
@@ -29,7 +30,7 @@ public class OrderController : ControllerBase
     public async Task Post([FromBody] Order order)
     {
         _orderService.Add(order);
-        await _publishEndpoint.Publish(order);
+        await _publishEndpoint.Publish(new OrderCreateEvent(order));
     }
 
     [HttpDelete("{id}")]

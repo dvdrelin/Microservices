@@ -1,4 +1,5 @@
 using InventoryService;
+using InventoryService.EventConsumers;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,14 +11,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(config =>
 {
-    config.AddConsumer<OrderConsumer>();
-    config.AddConsumer<ProductConsumer>();
+    config.AddConsumer<OrderCreateEventConsumer>();
+    config.AddConsumer<ProductCreateEventConsumer>();
     config.AddConsumer<ProductDeleteEventConsumer>();
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host("amqp://guest:guest@localhost:5672");
-        cfg.ReceiveEndpoint("order-queue", endpoint => endpoint.ConfigureConsumer<OrderConsumer>(ctx));
-        cfg.ReceiveEndpoint("product-queue", endpoint => endpoint.ConfigureConsumer<ProductConsumer>(ctx));
+        cfg.ReceiveEndpoint("order-create-queue", endpoint => endpoint.ConfigureConsumer<OrderCreateEventConsumer>(ctx));
+        cfg.ReceiveEndpoint("product-create-queue", endpoint => endpoint.ConfigureConsumer<ProductCreateEventConsumer>(ctx));
         cfg.ReceiveEndpoint("product-delete-queue", endpoint => endpoint.ConfigureConsumer<ProductDeleteEventConsumer>(ctx));
     });
 });
