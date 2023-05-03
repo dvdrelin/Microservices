@@ -5,6 +5,6 @@ namespace NotificationService;
 public interface INotificationService
 {
     void Add(Notification bill);
-    void Delete(int id);
+    void Delete(Guid notificationId);
     IEnumerable<Notification> Get();
 }

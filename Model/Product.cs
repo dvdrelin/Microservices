@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Product(int Id, string Name);
+public record Product(Guid Id, string Name, decimal Price);

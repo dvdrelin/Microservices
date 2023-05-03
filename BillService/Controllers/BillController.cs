@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Model;
 
 
 namespace BillService.Controllers
@@ -7,26 +8,23 @@ namespace BillService.Controllers
     [ApiController]
     public class BillController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly IBillService _billService;
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        public BillController(IBillService billService) => _billService = billService;
+
+        [HttpGet]
+        public IEnumerable<Bill> Get() => _billService.Get();
+
+        [HttpGet("user/{userId}")]
+        public IEnumerable<Bill> GetByUser(int userId) => _billService.Get().Where(x=>x.UserId == userId);
+
+        [HttpGet("{billId}")]
+        public Bill Get(Guid billId) => _billService.Get().First(x => x.BillId == billId);
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] int userId)
         {
-        }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

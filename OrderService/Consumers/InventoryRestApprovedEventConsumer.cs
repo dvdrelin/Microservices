@@ -14,7 +14,7 @@ public class InventoryRestApprovedEventConsumer : IConsumer<InventoryRestApprove
 
     public Task Consume(ConsumeContext<InventoryRestApprovedEvent> context)
     {
-        _logger.LogInformation($"Order ID={context.Message.Order.Id} with count={context.Message.Order.ProductCount} of product ID={context.Message.Order.ProductId} has passed inventory check successfully!");
+        _logger.LogInformation($"Order ID={context.Message.Order.OrderId} with count={context.Message.Order.ProductCount} of product ID={context.Message.Order.ProductId} has passed inventory check successfully!");
         return Task.CompletedTask;
     }
 }

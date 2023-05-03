@@ -18,8 +18,8 @@ public class InventoryRestFailedEventConsumer : IConsumer<InventoryRestFailedEve
 
     public Task Consume(ConsumeContext<InventoryRestFailedEvent> context)
     {
-        _logger.LogInformation($"Order {context.Message.Order.Id} with count={context.Message.Order.ProductCount} of product ID={context.Message.Order.ProductId} has not passed inventory check!");
-        _orderService.Delete(context.Message.Order.Id);
+        _logger.LogInformation($"Order {context.Message.Order.OrderId} with count={context.Message.Order.ProductCount} of product ID={context.Message.Order.ProductId} has not passed inventory check!");
+        _orderService.Delete(context.Message.Order.OrderId);
         return Task.CompletedTask;
     }
 }

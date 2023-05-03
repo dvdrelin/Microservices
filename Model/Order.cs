@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Order(int Id, int ProductId, string ProductName, int ProductCount);
+public record Order(int UserId, Guid OrderId, Guid ProductId, int ProductCount);

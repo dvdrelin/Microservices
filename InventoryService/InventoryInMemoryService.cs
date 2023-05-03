@@ -28,12 +28,12 @@ public sealed class InventoryInMemoryService : IInventoryService
         _items.Add(inventory);
     }
 
-    public void Delete(int id)
+    public void Delete(Guid productId)
     {
-        var target = _items.FirstOrDefault(x => x.ProductId == id);
+        var target = _items.FirstOrDefault(x => x.ProductId == productId);
         if (target is null)
         {
-            throw new Exception($"Inventory with ProductID={id} not found!");
+            throw new Exception($"Inventory with ProductID={productId} not found!");
         }
 
         _items.Remove(target);

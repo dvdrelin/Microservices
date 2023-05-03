@@ -3,7 +3,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Events;
-using System.Text.Json;
 using Model.Requests;
 
 namespace OrderService.Controllers;
@@ -31,38 +30,31 @@ public class OrderController : ControllerBase
     public IEnumerable<Order> Get() => _orderService.Get();
 
     [HttpGet("{id}")]
-    public Order? Get(int id) => _orderService.Get().FirstOrDefault(x => x.Id == id);
+    public Order? Get(Guid orderId) => _orderService.Get().FirstOrDefault(x => x.OrderId == orderId);
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Order order, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post(
+        int userId,
+        Guid productId,
+        int count,
+        CancellationToken cancellationToken)
     {
-        try
-        {
-            var productCount = await _client.GetResponse<GetProductCountResponse>(new GetProductCountRequest(order.ProductId), cancellationToken);
-            if (productCount.Message.Rest<order.ProductCount)
-            {
-                return BadRequest(
-                    $"Product rest={productCount.Message.Rest} with product ID={productCount.Message.ProductId} is less than requested({order.ProductCount})");
-            }
+        var order = new Order(userId, Guid.NewGuid(), productId, count);
 
-            _orderService.Add(order);
-            await _publishEndpoint.Publish(new OrderCreatedEvent(order), cancellationToken);
-            return Ok();
-        }
-        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode == HttpStatusCode.BadGateway)
+        var productCount = await _client.GetResponse<GetProductCountResponse>(new GetProductCountRequest(order.ProductId), cancellationToken);
+
+        if (productCount.Message.Rest < order.ProductCount)
         {
-            return NotFound($"Fetching the product rest with ID={order.ProductId} failed! Remote service is unreachable!");
+            return BadRequest(
+                $"Product rest={productCount.Message.Rest} with product ID={productCount.Message.ProductId} is less than requested({order.ProductCount})");
         }
-        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode == HttpStatusCode.NotFound)
-        {
-            return NotFound($"Fetching the product rest failed: {httpRequestException.Message}");
-        }
-        catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode is null)
-        {
-            return BadRequest($"Fetching the product rest failed! \r\n{httpRequestException}");
-        }
+
+        _orderService.Add(order);
+        await _publishEndpoint.Publish(new OrderCreatedEvent(order), cancellationToken);
+
+        return Ok();
     }
 
-    [HttpDelete("{id}")]
-    public void Delete(int id) => _orderService.Delete(id);
+    [HttpDelete("{orderId}")]
+    public void Delete(Guid orderId) => _orderService.Delete(orderId);
 }

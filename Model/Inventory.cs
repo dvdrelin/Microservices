@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Inventory(int ProductId, int Count);
+public record Inventory(Guid ProductId, int Count);

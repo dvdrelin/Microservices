@@ -5,7 +5,7 @@ namespace ProductService;
 public interface IProductService
 {
     void Add(Product product);
-    void Update(int id, Product product);
-    void Delete(int id);
+    void Update(Guid productId, Product product);
+    void Delete(Guid productId);
     IEnumerable<Product> Get();
 }

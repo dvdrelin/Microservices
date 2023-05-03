@@ -1,3 +1,3 @@
 ﻿namespace Model.Events;
 
-public record ProductDeletedEvent(int ProductId);
+public record ProductDeletedEvent(Guid ProductId);

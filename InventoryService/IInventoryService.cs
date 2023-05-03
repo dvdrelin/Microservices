@@ -6,6 +6,6 @@ public interface IInventoryService
 {
     void Add(Inventory inventory);
     void Update(Inventory inventory);
-    void Delete(int productId);
+    void Delete(Guid productId);
     IEnumerable<Inventory> Get();
 }

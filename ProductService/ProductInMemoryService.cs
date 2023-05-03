@@ -15,9 +15,9 @@ public sealed class ProductInMemoryService : IProductService
         _products.Add(product);
     }
 
-    public void Update(int id, Product product)
+    public void Update(Guid productId, Product product)
     {
-        var target = _products.FirstOrDefault(x => x.Id == id);
+        var target = _products.FirstOrDefault(x => x.Id == productId);
         if (target is null)
         {
             throw new Exception($"Product with ID={product.Id} not found!");
@@ -27,12 +27,12 @@ public sealed class ProductInMemoryService : IProductService
         _products.Add(product);
     }
 
-    public void Delete(int id)
+    public void Delete(Guid productId)
     {
-        var target = _products.FirstOrDefault(x => x.Id == id);
+        var target = _products.FirstOrDefault(x => x.Id == productId);
         if (target is null)
         {
-            throw new Exception($"Product with ID={id} not found!");
+            throw new Exception($"Product with ID={productId} not found!");
         }
 
         _products.Remove(target);

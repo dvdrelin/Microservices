@@ -1,3 +1,3 @@
 ﻿namespace Model.Requests;
 
-public record GetProductCountRequest(int ProductId);
+public record GetProductCountRequest(Guid ProductId);

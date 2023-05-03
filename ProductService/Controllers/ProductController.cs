@@ -18,28 +18,36 @@ public class ProductController : ControllerBase
         _publishEndpoint = publishEndpoint;
     }
 
-    [HttpGet] public IEnumerable<Product> Get() => _productService.Get();
+    [HttpGet] 
+    public IEnumerable<Product> Get() => _productService.Get();
 
-    [HttpGet("{id}")] public IActionResult Get(int id)
+    [HttpGet("{id}")]
+    public IActionResult Get(Guid productId)
     {
-        var product = _productService.Get().FirstOrDefault(x => x.Id == id);
+        var product = _productService.Get().FirstOrDefault(x => x.Id == productId);
 
         return product is null
-            ? NotFound($"Product width ID={id} not found!")
+            ? NotFound($"Product width ID={productId} not found!")
             : Ok(product);
     }
 
-    [HttpPost] public async Task Post([FromBody] Product product)
+    [HttpPost]
+    public async Task Post(string name, decimal price)
     {
+        var product = new Product(Guid.NewGuid(), name, price);
+
         _productService.Add(product);
+
         await _publishEndpoint.Publish(new ProductCreatedEvent(product));
     }
 
-    [HttpPut("{id}")] public void Put(int id, [FromBody] Product product) => _productService.Update(id, product);
+    [HttpPut("{id}")] 
+    public void Put(Guid productId, [FromBody] Product product) => _productService.Update(productId, product);
 
-    [HttpDelete("{id}")] public async Task Delete(int id)
+    [HttpDelete("{id}")]
+    public async Task Delete(Guid productId)
     {
-        _productService.Delete(id);
-        await _publishEndpoint.Publish(new ProductDeletedEvent(id));
+        _productService.Delete(productId);
+        await _publishEndpoint.Publish(new ProductDeletedEvent(productId));
     }
 }

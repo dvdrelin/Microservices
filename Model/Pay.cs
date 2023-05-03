@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Payment(int Id, Bill Bill, DateTime At);
+public record Payment(Guid PaymentId, Bill Bill, DateTime At, decimal Amount);

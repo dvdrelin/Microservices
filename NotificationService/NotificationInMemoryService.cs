@@ -6,24 +6,20 @@ public sealed class NotificationInMemoryService : INotificationService
 {
     private readonly List<Notification> _items = new();
 
-
     public void Add(Notification notification)
     {
-        var target = _items.FirstOrDefault(x => x.Id == notification.Id);
+        var target = _items.FirstOrDefault(x => x.NotificationId == notification.NotificationId);
         if (target is not null)
         {
-            throw new Exception($"Notification with ID={notification.Id} already exists!");
+            throw new Exception($"Notification with ID={notification.NotificationId} already exists!");
         }
         _items.Add(notification);
     }
 
-    public void Delete(int id)
+    public void Delete(Guid notificationId)
     {
-        var target = _items.FirstOrDefault(x => x.Id == id);
-        if (target is null)
-        {
-            throw new Exception($"Notification with ID={id} not found!");
-        }
+        var target = _items.FirstOrDefault(x => x.NotificationId == notificationId) ??
+                     throw new Exception($"Notification with ID={notificationId} not found!");
 
         _items.Remove(target);
     }

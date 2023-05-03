@@ -2,9 +2,9 @@
 
 namespace PayService;
 
-public interface IPayService
+public interface IPaymentService
 {
     void Add(Payment payment);
-    void Delete(int id);
+    void Delete(Guid paymentId);
     IEnumerable<Payment> Get();
 }

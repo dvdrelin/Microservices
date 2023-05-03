@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Bill(int Id, Order Order, decimal Amount);
+public record Bill(int UserId, Guid BillId, Order[] Order);

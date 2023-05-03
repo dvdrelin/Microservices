@@ -15,7 +15,7 @@ public class InventoryController : ControllerBase
     public IEnumerable<Inventory> Get() => _inventoryService.Get();
 
     [HttpGet("{id}")]
-    public Inventory? Get(int id) => _inventoryService.Get().FirstOrDefault(x => x.ProductId == id);
+    public Inventory? Get(Guid productId) => _inventoryService.Get().FirstOrDefault(x => x.ProductId == productId);
 
     [HttpPost]
     public void Post([FromBody] Inventory inventory) => _inventoryService.Add(inventory);

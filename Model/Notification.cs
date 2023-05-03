@@ -1,3 +1,3 @@
 ﻿namespace Model;
 
-public record Notification(int Id, Order Order, string Message);
+public record Notification(Guid NotificationId, Bill Bill, string Message);

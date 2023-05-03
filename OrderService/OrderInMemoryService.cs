@@ -8,20 +8,20 @@ public sealed class OrderInMemoryService : IOrderService
 
     public void Add(Order order)
     {
-        var target = _items.FirstOrDefault(x => x.Id == order.Id);
+        var target = _items.FirstOrDefault(x => x.OrderId == order.OrderId);
         if (target is not null)
         {
-            throw new Exception($"Order with ID={order.Id} already exists!");
+            throw new Exception($"Order with ID={order.OrderId} already exists!");
         }
         _items.Add(order);
     }
 
-    public void Delete(int id)
+    public void Delete(Guid orderId)
     {
-        var target = _items.FirstOrDefault(x => x.Id == id);
+        var target = _items.FirstOrDefault(x => x.OrderId == orderId);
         if (target is null)
         {
-            throw new Exception($"Order with ID={id} not found!");
+            throw new Exception($"Order with ID={orderId} not found!");
         }
 
         _items.Remove(target);
