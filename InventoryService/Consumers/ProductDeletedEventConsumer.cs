@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Model.Events;
 
-namespace InventoryService.EventConsumers;
+namespace InventoryService.Consumers;
 
 public class ProductDeletedEventConsumer : IConsumer<ProductDeletedEvent>
 {

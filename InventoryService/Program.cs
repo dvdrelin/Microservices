@@ -1,5 +1,5 @@
 using InventoryService;
-using InventoryService.EventConsumers;
+using InventoryService.Consumers;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);

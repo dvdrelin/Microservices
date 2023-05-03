@@ -1,7 +1,7 @@
 using MassTransit;
 using Model.Events;
 
-namespace OrderService.EventConsumers;
+namespace OrderService.Consumers;
 
 public class InventoryRestFailedEventConsumer : IConsumer<InventoryRestFailedEvent>
 {

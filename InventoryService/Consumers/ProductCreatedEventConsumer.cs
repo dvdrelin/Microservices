@@ -2,7 +2,7 @@
 using Model;
 using Model.Events;
 
-namespace InventoryService.EventConsumers;
+namespace InventoryService.Consumers;
 
 public class ProductCreatedEventConsumer : IConsumer<ProductCreatedEvent>
 {

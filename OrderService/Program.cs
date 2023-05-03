@@ -1,7 +1,7 @@
 
 using MassTransit;
 using OrderService;
-using OrderService.EventConsumers;
+using OrderService.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
