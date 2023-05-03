@@ -2,7 +2,7 @@
 
 namespace OrderService;
 
-public class OrderService : IOrderService
+public sealed class OrderInMemoryService : IOrderService
 {
     private readonly List<Order> _items = new();
 

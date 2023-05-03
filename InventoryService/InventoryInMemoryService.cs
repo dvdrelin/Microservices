@@ -2,7 +2,7 @@
 
 namespace InventoryService;
 
-public class InventoryService : IInventoryService
+public sealed class InventoryInMemoryService : IInventoryService
 {
     private readonly List<Inventory> _items = new();
 

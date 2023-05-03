@@ -2,7 +2,7 @@
 
 namespace BillService;
 
-class BillService : IBillService
+public sealed class BillInMemoryService : IBillService
 {
     private readonly List<Bill> _items = new();
 

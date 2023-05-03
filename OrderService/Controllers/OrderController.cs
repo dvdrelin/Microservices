@@ -3,7 +3,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Events;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace OrderService.Controllers;

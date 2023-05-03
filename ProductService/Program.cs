@@ -3,7 +3,7 @@ using ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IProductService>(new ProductService.ProductService());
+builder.Services.AddSingleton<IProductService>(new ProductService.ProductInMemoryService());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

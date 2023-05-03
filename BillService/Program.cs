@@ -2,7 +2,7 @@ using BillService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IBillService>(new BillService.BillService());
+builder.Services.AddSingleton<IBillService>(new BillService.BillInMemoryService());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

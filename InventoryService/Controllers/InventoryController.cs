@@ -1,5 +1,4 @@
-﻿using MassTransit.Transports;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model;
 
 namespace InventoryService.Controllers;

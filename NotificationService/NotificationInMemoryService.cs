@@ -2,7 +2,7 @@
 
 namespace NotificationService;
 
-public sealed class NotificationService : INotificationService
+public sealed class NotificationInMemoryService : INotificationService
 {
     private readonly List<Notification> _items = new();
 
