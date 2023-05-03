@@ -4,7 +4,7 @@ using Model.Events;
 
 namespace InventoryService.EventConsumers;
 
-public class OrderCreateEventConsumer : IConsumer<OrderCreateEvent>
+public class OrderCreateEventConsumer : IConsumer<OrderCreatedEvent>
 {
     private readonly ILogger<OrderCreateEventConsumer> _logger;
     private readonly IInventoryService _inventoryService;
@@ -17,7 +17,7 @@ public class OrderCreateEventConsumer : IConsumer<OrderCreateEvent>
         _publishEndpoint = publishEndpoint;
     }
 
-    public async Task Consume(ConsumeContext<OrderCreateEvent> context)
+    public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
     {
         _logger.LogInformation($"Got an order {context.Message}");
 
@@ -28,10 +28,10 @@ public class OrderCreateEventConsumer : IConsumer<OrderCreateEvent>
             if (stored.Count > context.Message.Order.ProductCount)
             {
                 _inventoryService.Update(new Inventory(context.Message.Order.ProductId, stored.Count - context.Message.Order.ProductCount));
-                await _publishEndpoint.Publish(new OrderSuccessfulOnInventoryEvent(context.Message.Order));
+                await _publishEndpoint.Publish(new InventoryRestApprovedEvent(context.Message.Order));
                 return;
             }
         }
-        await _publishEndpoint.Publish(new OrderFailedOnInventoryEvent(context.Message.Order, "There is no enough products."));
+        await _publishEndpoint.Publish(new InventoryRestFailedEvent(context.Message.Order, "There is no enough products."));
     }
 }
