@@ -4,7 +4,7 @@ using Model.Events;
 
 namespace InventoryService.EventConsumers;
 
-public class ProductCreateEventConsumer : IConsumer<ProductCreateEvent>
+public class ProductCreateEventConsumer : IConsumer<ProductCreatedEvent>
 {
     private const int Minimum = 100;
     private readonly ILogger<ProductCreateEventConsumer> _logger;
@@ -16,7 +16,7 @@ public class ProductCreateEventConsumer : IConsumer<ProductCreateEvent>
         _inventoryService = inventoryService;
     }
 
-    public Task Consume(ConsumeContext<ProductCreateEvent> context)
+    public Task Consume(ConsumeContext<ProductCreatedEvent> context)
     {
         _logger.LogInformation($"Got a new product {context.Message}. Set a default minimum = {Minimum}");
 

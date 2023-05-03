@@ -32,7 +32,7 @@ public class ProductController : ControllerBase
     [HttpPost] public async Task Post([FromBody] Product product)
     {
         _productService.Add(product);
-        await _publishEndpoint.Publish(new ProductCreateEvent(product));
+        await _publishEndpoint.Publish(new ProductCreatedEvent(product));
     }
 
     [HttpPut("{id}")] public void Put(int id, [FromBody] Product product) => _productService.Update(id, product);
@@ -40,6 +40,6 @@ public class ProductController : ControllerBase
     [HttpDelete("{id}")] public async Task Delete(int id)
     {
         _productService.Delete(id);
-        await _publishEndpoint.Publish(new ProductDeleteEvent(id));
+        await _publishEndpoint.Publish(new ProductDeletedEvent(id));
     }
 }

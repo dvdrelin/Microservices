@@ -2,7 +2,7 @@
 
 namespace ProductService;
 
-public sealed class ProductService : IProductService
+public sealed class ProductInMemoryService : IProductService
 {
     private readonly IList<Product> _products = new List<Product>();
     public void Add(Product product)

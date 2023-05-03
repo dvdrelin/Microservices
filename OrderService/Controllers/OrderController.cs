@@ -3,7 +3,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.Events;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace OrderService.Controllers;
@@ -48,7 +47,7 @@ public class OrderController : ControllerBase
             }
 
             _orderService.Add(order);
-            await _publishEndpoint.Publish(new OrderCreateEvent(order));
+            await _publishEndpoint.Publish(new OrderCreatedEvent(order));
             return Ok();
         }
         catch (HttpRequestException httpRequestException) when (httpRequestException.StatusCode == HttpStatusCode.BadGateway)

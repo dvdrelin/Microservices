@@ -6,7 +6,7 @@ using OrderService.EventConsumers;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddSingleton<IOrderService>(new OrderService.OrderService());
+builder.Services.AddSingleton<IOrderService>(new OrderService.OrderInMemoryService());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -2,7 +2,7 @@
 
 namespace PayService;
 
-public sealed class PayService : IPayService
+public sealed class PayInMemoryService : IPayService
 {
     private readonly List<Payment> _items = new();
 

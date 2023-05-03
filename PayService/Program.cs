@@ -2,7 +2,7 @@ using PayService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IPayService>(new PayService.PayService());
+builder.Services.AddSingleton<IPayService>(new PayService.PayInMemoryService());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

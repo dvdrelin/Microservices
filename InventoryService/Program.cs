@@ -4,7 +4,7 @@ using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IInventoryService>(new InventoryService.InventoryService());
+builder.Services.AddSingleton<IInventoryService>(new InventoryService.InventoryInMemoryService());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
