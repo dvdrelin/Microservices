@@ -4,13 +4,13 @@ using Model.Events;
 
 namespace InventoryService.EventConsumers;
 
-public class OrderCreateEventConsumer : IConsumer<OrderCreatedEvent>
+public class OrderCreatedEventConsumer : IConsumer<OrderCreatedEvent>
 {
-    private readonly ILogger<OrderCreateEventConsumer> _logger;
+    private readonly ILogger<OrderCreatedEventConsumer> _logger;
     private readonly IInventoryService _inventoryService;
     private readonly IPublishEndpoint _publishEndpoint;
 
-    public OrderCreateEventConsumer(ILogger<OrderCreateEventConsumer> logger, IInventoryService inventoryService, IPublishEndpoint publishEndpoint)
+    public OrderCreatedEventConsumer(ILogger<OrderCreatedEventConsumer> logger, IInventoryService inventoryService, IPublishEndpoint publishEndpoint)
     {
         _logger = logger;
         _inventoryService = inventoryService;
