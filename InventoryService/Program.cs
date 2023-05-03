@@ -14,6 +14,7 @@ builder.Services.AddMassTransit(config =>
     config.AddConsumer<OrderCreatedEventConsumer>();
     config.AddConsumer<ProductCreatedEventConsumer>();
     config.AddConsumer<ProductDeletedEventConsumer>();
+    config.AddConsumer<GetProductCountConsumer>();
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host("amqp://guest:guest@localhost:5672");
