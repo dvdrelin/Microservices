@@ -3,14 +3,14 @@ using Model.Events;
 
 namespace OrderService.EventConsumers;
 
-public class OrderFailedOnInventoryEventConsumer:IConsumer<InventoryRestFailedEvent>
+public class InventoryRestFailedEventConsumer : IConsumer<InventoryRestFailedEvent>
 {
     private readonly IOrderService _orderService;
-    private readonly ILogger<OrderFailedOnInventoryEventConsumer> _logger;
+    private readonly ILogger<InventoryRestFailedEventConsumer> _logger;
 
-    public OrderFailedOnInventoryEventConsumer(
+    public InventoryRestFailedEventConsumer(
         IOrderService orderService, 
-        ILogger<OrderFailedOnInventoryEventConsumer> logger)
+        ILogger<InventoryRestFailedEventConsumer> logger)
     {
         _orderService = orderService;
         _logger = logger;

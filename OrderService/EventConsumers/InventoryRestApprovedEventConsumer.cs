@@ -3,11 +3,11 @@ using Model.Events;
 
 namespace OrderService.EventConsumers;
 
-public class OrderSuccessfulOnInventoryEventConsumer:IConsumer<InventoryRestApprovedEvent>
+public class InventoryRestApprovedEventConsumer : IConsumer<InventoryRestApprovedEvent>
 {
-    private readonly ILogger<OrderSuccessfulOnInventoryEventConsumer> _logger;
+    private readonly ILogger<InventoryRestApprovedEventConsumer> _logger;
 
-    public OrderSuccessfulOnInventoryEventConsumer(ILogger<OrderSuccessfulOnInventoryEventConsumer> logger)
+    public InventoryRestApprovedEventConsumer(ILogger<InventoryRestApprovedEventConsumer> logger)
     {
         _logger = logger;
     }
