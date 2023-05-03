@@ -3,9 +3,7 @@ using InventoryService.Consumers;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSingleton<IInventoryService>(new InventoryService.InventoryInMemoryService());
-
+builder.Services.AddSingleton<IInventoryService>(new InventoryInMemoryService());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,16 +19,16 @@ builder.Services.AddMassTransit(config =>
         cfg.ReceiveEndpoint("order-create-queue", endpoint => endpoint.ConfigureConsumer<OrderCreatedEventConsumer>(ctx));
         cfg.ReceiveEndpoint("product-create-queue", endpoint => endpoint.ConfigureConsumer<ProductCreatedEventConsumer>(ctx));
         cfg.ReceiveEndpoint("product-delete-queue", endpoint => endpoint.ConfigureConsumer<ProductDeletedEventConsumer>(ctx));
+        cfg.ReceiveEndpoint("inventory-rest-queue", endpoint => endpoint.ConfigureConsumer<GetProductCountConsumer>(ctx));
     });
 });
-var app = builder.Build();
 
+var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

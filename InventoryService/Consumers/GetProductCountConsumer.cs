@@ -11,15 +11,13 @@ public class GetProductCountConsumer : IConsumer<GetProductCountRequest>
     {
         _inventoryService = inventoryService;
     }
+
     public async Task Consume(ConsumeContext<GetProductCountRequest> context)
     {
-        var inventory = _inventoryService.Get().FirstOrDefault(x => x.ProductId == context.Message.ProductId)
+        var inventory = _inventoryService.Get()
+                            .FirstOrDefault(x => x.ProductId == context.Message.ProductId)
             ?? throw new InvalidOperationException("Product rest not found!");
 
-        await context.RespondAsync<GetProductCountResponse>(new
-        {
-            context.Message.ProductId,
-            Rest = inventory.Count
-        });
+        await context.RespondAsync(new GetProductCountResponse(inventory.ProductId, inventory.Count));
     }
 }
